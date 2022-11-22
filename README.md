@@ -41,7 +41,7 @@ BUILD SUCCESSFUL in 0s
 <br>
 
 ## 예외 처리
-
+잘못된 값을 입력하면 IllegalArgumentException 발생시키고 "[ERROR]"로 시작하는 에러 메시지 출력 후 그 지점부터 다시 시작
 - 자동차 이름은 5자 이하
 - 자동차 이름은 쉼표로 구분
 - 시도할 회수는 숫자
