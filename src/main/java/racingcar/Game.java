@@ -13,15 +13,31 @@ public class Game {
     }
 
     public void start() {
-        String[] carNames = takeInput(scanner);
+        String[] carNames = takeInputCars(scanner);
         List<Car> cars = makeCars(carNames);
+        try {
+            int trial = takeInputTrial(scanner);
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] 시도 횟수는 숫자여야 합니다");
+        }
+
+    }
+
+    private int takeInputTrial(Scanner scanner) {
+        System.out.println("시도할 회수는 몇회인가요?");
+        String inputTrial = scanner.nextLine();
+        try {
+            return Integer.parseInt(inputTrial);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private List<Car> makeCars(String[] carNames) {
         return Arrays.stream(carNames).map(Car::new).collect(Collectors.toList());
     }
 
-    private String[] takeInput(Scanner scanner) {
+    private String[] takeInputCars(Scanner scanner) {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String input = scanner.nextLine();
         String[] names = input.split(",");
