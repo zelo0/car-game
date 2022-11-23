@@ -30,6 +30,17 @@ public class Game {
     }
 
     private void printFinalWinner() {
+        final int finalMaxPosition = getMaxPosition();
+
+        List<String> winners = cars.stream().filter(car -> car.getPosition() == finalMaxPosition)
+                .map(Car::getName).collect(Collectors.toList());
+
+        String winnersString = String.join(", ", winners);
+        System.out.println();
+        System.out.println("최종 우승자 : " + winnersString);
+    }
+
+    private int getMaxPosition() {
         int maxPosition = 0;
 
         for (Car car : cars) {
@@ -37,14 +48,7 @@ public class Game {
                 maxPosition = car.getPosition();
             }
         }
-
-        int finalMaxPosition = maxPosition;
-        List<String> winners = cars.stream().filter(car -> car.getPosition() == finalMaxPosition)
-                .map(Car::getName).collect(Collectors.toList());
-
-        String winnersString = String.join(", ", winners);
-        System.out.println();
-        System.out.println("최종 우승자 : " + winnersString);
+        return maxPosition;
     }
 
     private void moveCarsNTimes(int times) {
