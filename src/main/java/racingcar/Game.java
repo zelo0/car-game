@@ -26,6 +26,25 @@ public class Game {
         }
 
         moveCarsNTimes(this.trial);
+        printFinalWinner();
+    }
+
+    private void printFinalWinner() {
+        int maxPosition = 0;
+
+        for (Car car : cars) {
+            if (maxPosition < car.getPosition()) {
+                maxPosition = car.getPosition();
+            }
+        }
+
+        int finalMaxPosition = maxPosition;
+        List<String> winners = cars.stream().filter(car -> car.getPosition() == finalMaxPosition)
+                .map(Car::getName).collect(Collectors.toList());
+
+        String winnersString = String.join(", ", winners);
+        System.out.println();
+        System.out.println("최종 우승자 : " + winnersString);
     }
 
     private void moveCarsNTimes(int times) {
@@ -45,10 +64,7 @@ public class Game {
 
     private void moveCarsOneTime() {
         for (Car car : cars) {
-            int randomN = RandomUtils.nextInt(0, 9);
-            if (randomN >= 4) {
-                car.moveForward();
-            }
+            car.moveForward();
         }
     }
 
@@ -70,7 +86,6 @@ public class Game {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String input = scanner.nextLine();
         String[] names = input.split(",");
-//        System.out.println("names = " + Arrays.toString(names));
         try {
             checkIfFiveMoreLetters(names);
         } catch (IllegalArgumentException e) {
