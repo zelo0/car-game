@@ -1,5 +1,7 @@
 package racingcar;
 
+import utils.RandomUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class Game {
     private Scanner scanner;
+    private int trial;
+    private List<Car> cars;
 
     public Game(Scanner scanner) {
         this.scanner = scanner;
@@ -14,13 +18,38 @@ public class Game {
 
     public void start() {
         String[] carNames = takeInputCars(scanner);
-        List<Car> cars = makeCars(carNames);
+        this.cars = makeCars(carNames);
         try {
-            int trial = takeInputTrial(scanner);
+            this.trial = takeInputTrial(scanner);
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR] 시도 횟수는 숫자여야 합니다");
         }
 
+        moveCarsNTimes(this.trial);
+    }
+
+    private void moveCarsNTimes(int times) {
+        for (int i = 0; i < times; i++) {
+            moveCarsOneTime();
+            printCarsPosition();
+        }
+    }
+
+    private void printCarsPosition() {
+        System.out.println();
+        System.out.println("실행 결과");
+        for (Car car : cars) {
+            car.printPosition();
+        }
+    }
+
+    private void moveCarsOneTime() {
+        for (Car car : cars) {
+            int randomN = RandomUtils.nextInt(0, 9);
+            if (randomN >= 4) {
+                car.moveForward();
+            }
+        }
     }
 
     private int takeInputTrial(Scanner scanner) {
