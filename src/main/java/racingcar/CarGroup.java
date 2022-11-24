@@ -2,6 +2,7 @@ package racingcar;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class CarGroup {
@@ -30,14 +31,7 @@ public class CarGroup {
     }
 
     private int getMaxPosition() {
-        int maxPosition = 0;
-
-        for (Car car : cars) {
-            if (maxPosition < car.getPosition()) {
-                maxPosition = car.getPosition();
-            }
-        }
-        return maxPosition;
+        return cars.stream().mapToInt(Car::getPosition).max().orElseThrow(NoSuchElementException::new);
     }
 
     private void printCarsPosition() {
